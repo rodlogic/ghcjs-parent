@@ -7,7 +7,8 @@ all: ghcjs-prim
 
 clean:
 	cabal sandbox delete || true
-	cd cabal && rm -f cabal.sandbox.config
+	cd cabal/Cabal && rm -f cabal.sandbox.config
+	cd cabal/cabal-install && rm -f cabal.sandbox.config
 	cd ghcjs && rm -f cabal.sandbox.config
 	cd ghcjs-prim && rm -f cabal.sandbox.config
 
@@ -16,12 +17,15 @@ cabal.sandbox.config:
 	git submodule update
 	cabal sandbox init
 
-cabal/cabal.sandbox.config: cabal.sandbox.config
-	cd cabal && cabal sandbox init --sandbox ../.cabal-sandbox
+cabal/Cabal/cabal.sandbox.config: cabal.sandbox.config
+	cd cabal/Cabal && cabal sandbox init --sandbox ../../.cabal-sandbox
+
+cabal/cabal-install/cabal.sandbox.config: cabal.sandbox.config
+	cd cabal/cabal-install && cabal sandbox init --sandbox ../../.cabal-sandbox
 
 .cabal-sandbox/bin/cabal: cabal/cabal.sandbox.config
-	cd cabal && cabal install cabal-install
-
+	cd cabal/Cabal && cabal install Cabal
+	cd cabal/cabal-install && cabal install cabal-install
 
 ghcjs/cabal.sandbox.config: cabal.sandbox.config .cabal-sandbox/bin/cabal
 	cd ghcjs && PATH=$(SANDBOX_PATH):$(PATH) cabal sandbox init --sandbox ../.cabal-sandbox
