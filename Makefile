@@ -30,4 +30,4 @@ ghcjs-prim: .cabal-sandbox/bin/cabal
 	PATH=$(SANDBOX_PATH):$(PATH) cabal install ./ghcjs-prim --reorder-goals --max-backjumps=-1
 
 ghcjs: ghcjs-prim
-	PATH=$(SANDBOX_PATH):$(PATH) cabal install ./ghcjs --reorder-goals --max-backjumps=-1
+	PATH=$(SANDBOX_PATH):$(PATH) cabal install ./ghcjs --reorder-goals --max-backjumps=-1 --force-reinstalls
