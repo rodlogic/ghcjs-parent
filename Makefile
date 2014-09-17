@@ -17,15 +17,11 @@ cabal.sandbox.config:
 	git submodule update
 	cabal sandbox init
 
-cabal/Cabal/cabal.sandbox.config: cabal.sandbox.config
-	cd cabal/Cabal && cabal sandbox init --sandbox ../../.cabal-sandbox
-
-cabal/cabal-install/cabal.sandbox.config: cabal.sandbox.config
-	cd cabal/cabal-install && cabal sandbox init --sandbox ../../.cabal-sandbox
+cabal/cabal.sandbox.config: cabal.sandbox.config
+	cd cabal && cabal sandbox init --sandbox ../.cabal-sandbox
 
 .cabal-sandbox/bin/cabal: cabal/cabal.sandbox.config
-	cd cabal/Cabal && cabal install Cabal
-	cd cabal/cabal-install && cabal install cabal-install
+	cd cabal && cabal install ./Cabal ./cabal-install
 
 ghcjs/cabal.sandbox.config: cabal.sandbox.config .cabal-sandbox/bin/cabal
 	cd ghcjs && PATH=$(SANDBOX_PATH):$(PATH) cabal sandbox init --sandbox ../.cabal-sandbox
