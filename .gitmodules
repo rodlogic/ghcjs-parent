@@ -1,0 +1,9 @@
+[submodule "cabal"]
+	path = cabal
+	url = https://github.com/ghcjs/cabal.git
+[submodule "ghcjs-prim"]
+	path = ghcjs-prim
+	url = https://github.com/ghcjs/ghcjs-prim.git
+[submodule "ghcjs"]
+	path = ghcjs
+	url = https://github.com/ghcjs/ghcjs.git
