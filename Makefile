@@ -12,8 +12,8 @@ clean:
 	cd ghcjs-prim && rm -f cabal.sandbox.config
 
 cabal.sandbox.config:
+	git submodule update
 	cabal sandbox init
-
 
 cabal/cabal.sandbox.config: cabal.sandbox.config
 	cd cabal && cabal sandbox init --sandbox ../.cabal-sandbox
