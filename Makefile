@@ -3,7 +3,7 @@
 
 SANDBOX_PATH=$(shell pwd)/.cabal-sandbox/bin
 
-all: ghcjs-prim
+all: ghcjs
 
 clean:
 	cabal sandbox delete || true
@@ -26,12 +26,8 @@ cabal/cabal.sandbox.config: cabal.sandbox.config
 ghcjs/cabal.sandbox.config: cabal.sandbox.config .cabal-sandbox/bin/cabal
 	cd ghcjs && PATH=$(SANDBOX_PATH):$(PATH) cabal sandbox init --sandbox ../.cabal-sandbox
 
-ghcjs: ghcjs/cabal.sandbox.config
-	cd ghcjs && PATH=$(SANDBOX_PATH):$(PATH) cabal install ghcjs
+ghcjs-prim: .cabal-sandbox/bin/cabal
+	PATH=$(SANDBOX_PATH):$(PATH) cabal install ./ghcjs-prim --reorder-goals --max-backjumps=-1
 
-
-ghcjs-prim/cabal.sandbox.config: cabal.sandbox.config .cabal-sandbox/bin/cabal 
-	cd ghcjs-prim && PATH=$(SANDBOX_PATH):$(PATH) cabal sandbox init --sandbox ../.cabal-sandbox
-
-ghcjs-prim: ghcjs-prim/cabal.sandbox.config ghcjs
-	cd ghcjs-prim && PATH=$(SANDBOX_PATH):$(PATH) cabal install ghcjs-prim
+ghcjs: ghcjs-prim
+	PATH=$(SANDBOX_PATH):$(PATH) cabal install ./ghcjs --reorder-goals --max-backjumps=-1
